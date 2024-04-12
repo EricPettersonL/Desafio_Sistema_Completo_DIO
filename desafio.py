@@ -1,26 +1,13 @@
-    
-# Criar uma função para cada regra
-
-def menu():
-    print("\n1 - Depositar")
-    print("2 - Saque")
-    print("3 - Extrato")
-    print("4 - Criar usuario")
-    print("5 - Criar conta")
-    print("6 - Listar conta")
-    print("7 - Sair\n")
-    op = int(input())
-    return op
-
-# Deposito 
-    # só valores positivos
-    # todos devem ser armazenados para vizualizar no extrato
-    # Fazer uma função para deposito
-        # Recebe argumentos por posição (positional only)
-        # retorno Saldo e extrato
 
 def depositar(valor, saldo, extrato):
+    '''
+    Função para depósito
     
+    Recebe argumentos por posição (valor, saldo, extrato)
+    
+    Retorna saldo e extrato    
+    
+    '''
     if valor > 0:
         saldo += valor
         extrato += f"\nDeposito: R${valor:.2f}\n"
@@ -32,15 +19,17 @@ def depositar(valor, saldo, extrato):
     
     return saldo, extrato
     
-# Saque
-    # No maximo 3 saques de 500 por dia
-    # Se não houver saldo, mostrar uma mensagem informando
-    # todos devem ser armazenados para vizualizar no extrato
-    # Fazer uma função para saque
-        # Recebe argumentos por nome (keyword only)
-        # Retorno Saldo e extrato    
+   
 
 def saque(*,sacar, saldo, limite, extrato, numero_saques, LIMITE_SAQUES):
+    '''
+    Função para saque
+    
+    Recebe argumentos por nome (sacar, saldo, limite, extrato, numero_saques, LIMITE_SAQUES)
+    
+    Retorna saldo, extrato e numero_saques
+    
+    '''
     
     if numero_saques > LIMITE_SAQUES:
         print("\nLimite de saques excedido.\n")
@@ -68,33 +57,45 @@ def saque(*,sacar, saldo, limite, extrato, numero_saques, LIMITE_SAQUES):
     return saldo, extrato, numero_saques
 
 
-
-# Extrato
-    # deve mostrar todos os movimentos
-    # e no final mostrar o saldo atual
-    # Fazer uma função para extrato
-        # Recebe argumentos por nome e posição (keyword only e positional only)
-        
+       
 def extrato_total(saldo,/,*, extrato):
+    '''
+    Função exibir o extrato
+    
+    Recebe argumentos por nome (extrato) e por ordem (saldo)
+    
+    
+    '''
     print("\n=========== Extrato ===========")
     print("Não foram realizadas movimentações." if not extrato else extrato)
     print(f"\nSaldo: R${saldo:.2f}")
     print("==============================")
 
 
-# Criar usuario(cliente do banco)
-    # Deve armazenar em uma lista 
-    # Composto por nome, data de nascimento, cpf e endereço(logradouro, numero - bairro - cidade/uf)
-    # Deve ser armazenado apenas os numeros do CPF
-    # Não podemos cadastrar 2 usuarios com o mesmo 
     
 def filtrar_cpf(cpf_formatado, lista_de_clientes):
+    '''
+    Função para filtrar o CPF
+    
+    Recebe argumentos por nome (cpf_formatado, lista_de_clientes)
+    
+    Retorna o cliente
+    '''
     for i in lista_de_clientes:
         if i["CPF"] == cpf_formatado:
             return i
 
 
+
 def criar_usuario(lista_de_clientes):
+    
+    '''
+    Função para criar o usuario
+    
+    Recebe argumentos por nome (lista_de_clientes)
+    
+    Retorna o cliente
+    '''
     
     cpf = input("CPF: ")
     cpf_formatado = cpf.replace(".", "").replace("-", "")
@@ -112,14 +113,17 @@ def criar_usuario(lista_de_clientes):
     
     print("\nUsuario criado com sucesso!")
 
-# Criar conta(vincular com o usuario)
-    #Deve armazenar em uma lista
-    #Composto por agencia, numero da conta e usuario
-    #O numero da conta e sequencial e tem que iniciar em 1
-    #A agencia e fixa e é 0001
-    # O usuario pode ter mais de uma conta, mais uma conta so pode ter um usuario    
+
     
 def criar_conta(agencia, numero_conta, lista_de_clientes):
+    '''
+    Função para criar a conta
+    
+    Recebe argumentos por nome (agencia, numero_conta, lista_de_clientes)
+    
+    Retorna a conta
+    '''
+    
     cpf = input("CPF: ")
     cpf_formatado = cpf.replace(".", "").replace("-", "")
     cliente = filtrar_cpf(cpf_formatado, lista_de_clientes)
@@ -132,11 +136,50 @@ def criar_conta(agencia, numero_conta, lista_de_clientes):
         print("\nUsuario não encontrado\n")
 
 
+
 def listar_contas(contas):
+    '''
+    Função para quantificar as contas
+    
+    Recebe argumentos por nome (contas)
+    
+    Imprime as contas
+    '''
     for i in contas:
         print(f"\nAgencia: {i['agencia']}\nNumero da conta: {i['numero_conta']}\n Nome: {i['cliente']['Nome']}\n")
+        
+        
+        
+def menu():
+    '''
+    Função menu
+    
+    Para a interação com o usuário
+    
+    '''
+    
+    print("\n1 - Depositar")
+    print("2 - Saque")
+    print("3 - Extrato")
+    print("4 - Criar usuario")
+    print("5 - Criar conta")
+    print("6 - Listar conta")
+    print("7 - Sair\n")
+    op = int(input())
+    return op
+
+
 
 def logica_principal():
+    '''
+    Função principal
+    
+    Cria o menu e as regras de cada opção
+    
+    
+    '''
+    
+    
     
     saldo = 0
     extrato = ""
@@ -184,6 +227,8 @@ def logica_principal():
             break
         else:
             print("Opção inválida")
+
+
             
 if __name__ == "__main__":
     logica_principal()
